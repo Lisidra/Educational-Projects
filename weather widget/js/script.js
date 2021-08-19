@@ -17,7 +17,9 @@ fetch('http://api.openweathermap.org/data/2.5/weather?id=498817&appid=02f63cdb5b
 
     document.querySelector('.condition').textContent = data.weather[0]['description'];
     document.querySelector('.feels-like').innerHTML = `Ощущается как: ${Math.round(data.main.feels_like)}&#8451;`
-    document.querySelector('.wind-speed span').textContent = `${data.wind.speed} м/с`;
+    document.querySelector('.wind-speed span').textContent = data.wind.speed + 'м/с';
+    document.querySelector('.atmospheric-pressure span').textContent = data.main.pressure + ' мм рт.ст.'
+    document.querySelector('.air-humidity span').textContent = data.main.humidity + '%'
   })
   .catch(() => {
     // ошибки
