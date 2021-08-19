@@ -17,17 +17,12 @@
   margin: 0 auto;
   padding: 20px 15px;
   border-radius: 5px;
-  background: #6ec9cc;
-  color: rgb(53, 52, 52);
-}
-
-.brief-info, .forecast {
-  width: 100%;
 }
 
 .brief-info{
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 .header{
   display: flex;
