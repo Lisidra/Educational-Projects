@@ -1,22 +1,23 @@
-const userName = 'vetlee'
 let count = 0;
-fetch(`https://api.github.com/users/${userName}`)
-  .then(resp => { return resp.json() })
-  .then(data => {
-    // console.log(data);
-    document.querySelector('.profile-photo').src = data.avatar_url; // аватар
-    if (data.name == null) {
-      document.querySelector('.user-name').textContent = data.login; // имя пользователя, если есть
-    }
-    else {
-      document.querySelector('.user-name').textContent = data.name; // иначе никнейм
-    }
-    document.title = `GitInfo - ${data.login}` // никнейм в имени вкладки
-    document.querySelector('.user-emain').textContent = data.email; // Emain
-    document.querySelector('.user-location').textContent = data.location; // Местоположение
-    document.querySelector('.repositories .quantity').textContent = data.public_repos; // количество публичных репозиториев
-    document.querySelector('.followers .quantity').textContent = data.followers; // количество подписчиков
-  })
+
+function toElem(field) {
+  return document.querySelector(field)
+}
+const getInfo = (userName) => {
+  fetch(`https://api.github.com/users/${userName}`)
+    .then(resp => { return resp.json() })
+    .then(data => {
+      document.title = `GitInfo - ${data.login}`
+      toElem('.profile-photo').src = data.avatar_url; // аватар
+      toElem('.user-name').textContent = (data.name == null) ? data.login : data.name; // имя пользователя или никнейм
+      toElem('.user-emain').textContent = data.email; // Emain
+      toElem('.user-location').textContent = data.location; // Местоположение
+      toElem('.repositories .quantity').textContent = data.public_repos; // количество публичных репозиториев
+      toElem('.followers .quantity').textContent = data.followers; // количество подписчиков
+    })
+}
+
+getInfo('lisidra');
 
 fetch(`https://api.github.com/users/${userName}/repos`)
   // получаем массив с инфой по всем открытым репозиториям пользователя
@@ -47,41 +48,3 @@ fetch(`https://api.github.com/users/${userName}/repos`)
         })
     }
   })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// fetch(`https://api.github.com/users/${userName}/repos`)
-//   // Получаем список репозиториев пользователя
-//   .then(resp => { return resp.json() })
-//   .then(data => {
-//     console.log(data);
-//     for (let i = 0; i < data.length; i++) {
-//       // Перебираем список, складывая количество коммитов в каждом из них
-//       fetch(data[i].commits_url.slice(0, -6))
-//         .then(resp => { return resp.json() })
-//         .then(data => {
-//           // console.log(data.length);
-//           countCommits += data.length;
-//           console.log('============');
-//           console.log(`Коммитов в текущем репозитории: ${data.length}`);
-//           console.log(`Счётчик коммитов: ${countCommits}`);
-//         })
-//     }
-//   })
-
-// console.log(countCommits);
-// document.querySelector('.commits .quantity').textContent = countCommits;
