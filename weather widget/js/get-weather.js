@@ -4,9 +4,8 @@ const lang = 'Ru';
 const units = 'metric';
 const cityID = '498817'
 
-function toElem(field) {
-  return document.querySelector(field)
-}
+// шаблонизатор обращений к элементам DOM
+const toElem = (field) => document.querySelector(field);
 
 fetch(`http://api.openweathermap.org/data/2.5/weather?id=${cityID}&appid=${apiId}&units=${units}&lang=${lang}`)
   .then((resp) => {
