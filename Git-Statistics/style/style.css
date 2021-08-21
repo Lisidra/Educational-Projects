@@ -1,0 +1,89 @@
+:root {
+  --main-bg-color: hsl(185, 75%, 39%);
+  --headings-text-color: hsl(229, 23%, 23%);
+  --subheadings-text-color: hsl(0, 0%, 59%);
+  --size-profile-photo: 96px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+body{
+  background: rgb(192, 191, 191);
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: 'Kumbh Sans', sans-serif;
+  font-size: 18px;
+}
+.container{
+  margin: 100px auto 50px;
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  width: 330px; 
+  height: 380px;
+  overflow: hidden;
+  position: relative;
+  /* border: 1px solid black; */
+}
+.headrer{
+  height: 140px;
+  background: #21262D;
+}
+.photo img{
+  border-radius: 50%;
+  overflow: hidden;
+  position:absolute;
+}
+.profile-photo{
+  height: var(--size-profile-photo);
+  border: 5px solid white;
+  top: 87px; 
+  left: 35%;
+}
+.base-info{
+  height: 150px;
+  background-color: white;
+  text-align: center;
+  padding-top: 75px;
+  box-sizing: border-box;
+}
+.user-name{
+  color: var(--headings-text-color);
+  font-weight: 700;
+}
+.age, .user-location{
+  color: var(--subheadings-text-color);
+}
+.user-location, .user-emain{
+  font-size: 0.8em;
+  margin-top: 10px;
+}
+.statistics{
+  height: 90px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  border-top: 1px solid hsl(0, 0%, 90%);
+}
+.quantity{
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--headings-text-color);
+}
+.units{
+  font-weight: 400;
+  font-size: 0.6em;
+  color: var(--subheadings-text-color);
+  letter-spacing: 2px; /* расстояние между символами/буквами */
+}
+
+@media screen and (min-width: 1440px){
+  .container{
+      width: 380px;
+  }
+}
