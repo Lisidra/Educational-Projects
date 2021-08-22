@@ -24,19 +24,26 @@ body{
   background-color: #FFFFFF;
   border-radius: 15px;
   width: 330px; 
-  height: 380px;
+  min-height: 330px;
   overflow: hidden;
   position: relative;
   /* border: 1px solid black; */
 }
+/* @media screen and (min-width: 1440px){
+  .container{
+      width: 380px;
+  }
+} */
+
 .headrer{
   height: 140px;
-  background: #21262D;
+  background: rgb(33, 38, 45);
 }
 .photo img{
   border-radius: 50%;
   overflow: hidden;
   position:absolute;
+  background: rgb(255, 255, 255);
 }
 .profile-photo{
   height: var(--size-profile-photo);
@@ -45,11 +52,14 @@ body{
   left: 35%;
 }
 .base-info{
-  height: 150px;
+  min-height: 120px;
   background-color: white;
   text-align: center;
-  padding-top: 75px;
+  padding-top: 65px;
+  margin-bottom: 10px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 .user-name{
   color: var(--headings-text-color);
@@ -79,11 +89,41 @@ body{
   font-weight: 400;
   font-size: 0.6em;
   color: var(--subheadings-text-color);
-  letter-spacing: 2px; /* расстояние между символами/буквами */
+  letter-spacing: 2px; /* расстояние между символами */
 }
 
-@media screen and (min-width: 1440px){
-  .container{
-      width: 380px;
-  }
+.block-search{
+  position: relative;
+  /* border: 1px solid red; */
+  color: var(--headings-text-color);
+}
+.input-search{
+  border: none;
+  border-bottom: 2px solid rgb(33, 38, 45);
+  outline: none; /* удаляет обводку активного input */
+  padding: 2px 30px 2px 2px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  max-width: 35%;
+}
+.bt-search{
+  position: absolute;
+  background: none;
+  border: none;
+  top: 10%;
+  right: 90px;
+  font-weight: 700;
+}
+.bt-search:hover{
+  color: green;
+}
+.bt-search:active{
+  font-weight: 900;
+}
+
+.user-name,
+.user-email,
+.user-location {
+  display: none;
 }

@@ -1,60 +1,79 @@
 // шаблонизатор обращений к элементам DOM
-function toElem(field) {
-  return document.querySelector(field)
+const toElem = (field) => document.querySelector(field);
+
+// Управляет скрытие/показом элемента на странице
+const visibleElement = (elem, status) => {
+  let getStatus = (status) ? 'block' : 'none';
+  toElem(elem).style.display = getStatus;
 }
 
-const output = (item) => {
-  toElem('.commits .quantity').textContent = item;
-}
+const searchInput = toElem('.input-search'); // поле поиска
+const searchBtn = toElem('.bt-search'); // кнопка поиска
+let count = 0; // счётчик коммитов
 
-const calc = (item) => {
-  for (value in item) {
-    count++;
+// Start >>>
+searchBtn.addEventListener('click', () => {
+  if (searchInput.value.trim() != '') {
+    getInfo(searchInput.value);
+    searchInput.hidden = true;
+    searchBtn.hidden = true;
   }
-  output(count)
+  searchInput.value = ''
+})
+
+// main >>>
+const getInfo = (userName) => {
+  fetch(`https://api.github.com/users/${userName}`)
+    .then(resp => resp.json()) // data to JSON
+    .then(data => {
+
+      if (data.name || data.login) {
+        visibleElement('.user-name', true);
+        toElem('.user-name').textContent = (data.name) ? data.name : data.login;
+        document.title = `Git-Info - ${data.login}`
+      } // имя пользователя или никнейм
+
+      if (data.email) {
+        visibleElement('.user-email', true);
+        toElem('.user-email').textContent = data.email;
+      } // Email
+
+      if (data.location) {
+        visibleElement('.user-location', true);
+        toElem('.user-location').textContent = data.location;
+      } // Местоположение
+
+      if (data.avatar_url) toElem('.profile-photo').src = data.avatar_url; // аватар
+
+      toElem('.repositories .quantity').textContent = data.public_repos; // количество публичных репозиториев
+      toElem('.followers .quantity').textContent = data.followers; // количество подписчиков
+      getRepos(userName); // возвращает на страницу количество коммитов в репозиториях
+    })
+  count = 0; // обнуление счетчика коммитов
 }
 
-const requestByLink = (item) => {
-  fetch(item)
-    .then(commit => commit.json())
-    .then(commit => calc(commit))
+const getRepos = (userName) => {
+  fetch(`https://api.github.com/users/${userName}/repos`)
+    .then(resp => resp.json()) // data to JSON
+    .then(data => linksToArr(data)) // возвращает ссылки на репозитории
+    .then(links => countCommits(links)) // 
 }
 
 const linksToArr = (data) => {
   let links = [];
   data.forEach(item => links.push(item.commits_url.slice(0, -6)))
   return links;
-}
+} // возвращает массив со ссылками на репозитории
 
-const viewCommits = (data) => {
-  for (let i = 0; i < data.length; i++) {
-    requestByLink(data[i])
-  }
-}
+const countCommits = (data) => {
+  for (item of data) requestByLink(item)
+} // todo
 
-// Task-2
-const getRepos = (userName) => {
-  fetch(`https://api.github.com/users/${userName}/repos`)
-    .then(resp => resp.json()) // data to JSON
-    .then(data => linksToArr(data)) // находим ссылки и добавляем в массив
-    .then(links => viewCommits(links)) // делаем запросы по ссылкам
-}
-
-// Основная функция
-const getInfo = (userName) => {
-  fetch(`https://api.github.com/users/${userName}`)
-    .then(resp => { return resp.json() })
-    .then(data => {
-      document.title = `GitInfo - ${data.login}`
-      toElem('.profile-photo').src = data.avatar_url; // аватар
-      toElem('.user-name').textContent = (data.name == null) ? data.login : data.name; // имя пользователя или никнейм
-      toElem('.user-emain').textContent = data.email; // Emain
-      toElem('.user-location').textContent = data.location; // Местоположение
-      toElem('.repositories .quantity').textContent = data.public_repos; // количество публичных репозиториев
-      toElem('.followers .quantity').textContent = data.followers; // количество подписчиков
-      getRepos(userName); // количество коммитов
+const requestByLink = (link) => {
+  fetch(link)
+    .then(commits => commits.json())
+    .then(commits => {
+      for (value in commits) count++;
+      toElem('.commits .quantity').textContent = count;
     })
-}
-
-let count = 0; // счётчик коммитов
-getInfo('vetlee')
+} // todo
