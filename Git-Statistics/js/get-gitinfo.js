@@ -68,7 +68,7 @@ const linksToArr = (data) => {
 const countCommits = (data) => {
   for (item of data) {
     requestByLink(item)
-    console.log(item)
+    console.log(item) // возвращает в console.log ссылки на репозитории
   }
 } // todo
 
