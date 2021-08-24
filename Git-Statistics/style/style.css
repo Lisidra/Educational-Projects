@@ -1,7 +1,7 @@
 :root {
-  --main-bg-color: hsl(185, 75%, 39%);
-  --headings-text-color: hsl(229, 23%, 23%);
-  --subheadings-text-color: hsl(0, 0%, 59%);
+  --main-bg-color: rgb(25, 162, 174);
+  --headings-text-color: rgba(45, 50, 72, 0.904);
+  --subheadings-text-color: rgb(150, 150, 150);
   --size-profile-photo: 96px;
 }
 
@@ -10,6 +10,8 @@
   padding: 0;
 }
 body{
+  font-size: 18px;
+  color: var(--headings-text-color);
   background: rgb(192, 191, 191);
 }
 .main {
@@ -17,7 +19,6 @@ body{
   flex-direction: column;
   justify-content: center;
   font-family: 'Kumbh Sans', sans-serif;
-  font-size: 18px;
 }
 .container{
   margin: 100px auto 50px;
@@ -62,14 +63,13 @@ body{
   flex-direction: column;
 }
 .user-name{
-  color: var(--headings-text-color);
   font-weight: 700;
 }
 .age, .user-location{
   color: var(--subheadings-text-color);
 }
 .user-location, .user-emain{
-  font-size: 0.8em;
+  font-size: .9rem;
   margin-top: 10px;
 }
 .statistics{
@@ -83,19 +83,16 @@ body{
 .quantity{
   font-weight: 700;
   margin-bottom: 10px;
-  color: var(--headings-text-color);
 }
 .units{
   font-weight: 400;
-  font-size: 0.6em;
+  font-size: .7rem;
   color: var(--subheadings-text-color);
   letter-spacing: 2px; /* расстояние между символами */
 }
 
 .block-search{
   position: relative;
-  /* border: 1px solid red; */
-  color: var(--headings-text-color);
 }
 .input-search{
   border: none;
@@ -106,6 +103,7 @@ body{
   font-size: 1rem;
   text-align: center;
   max-width: 35%;
+  transition: all ease .7s;
 }
 .bt-search{
   position: absolute;
@@ -114,15 +112,27 @@ body{
   top: 10%;
   right: 90px;
   font-weight: 700;
+  opacity: .5;
 }
 .bt-search:hover{
-  color: green;
+  opacity: .7;
+  transition: all ease .4s;
 }
 .bt-search:active{
   font-weight: 900;
 }
 
-.user-name,
+.change-user{
+  font-size: .9rem;
+  font-weight: 700;
+  color: rgb(0, 0, 0);
+  opacity: .6;
+}
+.change-user:hover {
+  opacity: .8;
+}
+
+.userName-block,
 .user-email,
 .user-location {
   display: none;

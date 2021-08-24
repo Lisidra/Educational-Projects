@@ -7,9 +7,33 @@ const visibleElement = (elem, status) => {
   toElem(elem).style.display = getStatus;
 }
 
+const defaultPhoto = 'images/default_photo.svg';
+const defaultSimbol = '***'
+
 const searchInput = toElem('.input-search'); // поле поиска
 const searchBtn = toElem('.bt-search'); // кнопка поиска
 let count = 0; // счётчик коммитов
+
+const defaultState = () => {
+  // U+22C8
+  // &#8904;
+  document.title = `Git-Info`
+  toElem('.user-name').textContent = '';
+  toElem('.user-email').textContent = '';
+  toElem('.user-location').textContent = '';
+  toElem('.repositories .quantity').textContent = defaultSimbol;
+  toElem('.commits .quantity').textContent = defaultSimbol;
+  toElem('.followers .quantity').textContent = defaultSimbol;
+  toElem('.profile-photo').src = defaultPhoto;
+  visibleElement('.userName-block', false);
+  visibleElement('.user-email', false);
+  visibleElement('.user-location', false);
+  searchInput.hidden = false;
+  searchBtn.hidden = false;
+}
+
+// init()
+defaultState();
 
 // Start >>>
 searchBtn.addEventListener('click', () => {
@@ -18,8 +42,15 @@ searchBtn.addEventListener('click', () => {
     searchInput.hidden = true;
     searchBtn.hidden = true;
   }
+  else {
+    searchInput.style.borderColor = 'rgb(207, 77, 77)';
+    setTimeout(() => searchInput.style.borderColor = 'rgb(33, 38, 45)', 500)
+  }
   searchInput.value = ''
 })
+
+// Change User - Button
+toElem('.change-user').addEventListener('click', () => defaultState())
 
 // main >>>
 const getInfo = (userName) => {
@@ -28,7 +59,7 @@ const getInfo = (userName) => {
     .then(data => {
 
       if (data.name || data.login) {
-        visibleElement('.user-name', true);
+        visibleElement('.userName-block', true);
         toElem('.user-name').textContent = (data.name) ? data.name : data.login;
         document.title = `Git-Info - ${data.login}`
       } // имя пользователя или никнейм
